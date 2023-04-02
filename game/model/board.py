@@ -72,7 +72,7 @@ class Board:
   def move_tile(self, row, col, move, merged_tiles):
 
     if not self.can_tile_move(row, col, move, merged_tiles):
-      return False
+      return
       
     if move == Move.Up:
       neighbor = (row - 1, col)
@@ -87,7 +87,8 @@ class Board:
       neighbor = (row, col + 1)
       new_value = self._board[row][col] + self.get_tile_value(row=row, col=col + 1)
 
-    merged = not self.is_tile_empty(row=neighbor[0], col=neighbor[1])
+    if not self.is_tile_empty(row=neighbor[0], col=neighbor[1]):
+      merged_tiles.add(neighbor)
 
     self.update_tile(
       row = neighbor[0], 
@@ -97,15 +98,12 @@ class Board:
     
     self.update_tile(row = row, col = col, value = 0)
     
-    return merged or self.move_tile(
+    self.move_tile(
       row = neighbor[0], 
       col = neighbor[1], 
       move=move,
       merged_tiles=merged_tiles
     )
-
-
-
 
   def move(self, move):
     merged_tiles = set()
@@ -117,14 +115,10 @@ class Board:
       
     if move in [Move.Up, Move.Down]:
       for col in range(self._size):
-        for raw in order:
-          # merged = neighbor
-          merged = self.move_tile(row=row, col=col, move=move, merged_tiles=merged_tiles)
-          merged_tiles.add(merged)
+        for row in order:
+          self.move_tile(row=row, col=col, move=move, merged_tiles=merged_tiles)
 
     if move in [Move.Left, Move.Right]:
       for row in range(self._size):
         for col in order:
-          # merged = neighbor
-          merged = self.move_tile(row=row,col=col, move=move, merged_tiles=merged_tiles)
-          merged_tiles.add(merged)
+          self.move_tile(row=row,col=col, move=move, merged_tiles=merged_tiles)

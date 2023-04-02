@@ -7,7 +7,7 @@ class View:
     print(f"{'#' * 5} Game Table {'#' * 5}")
     for row in board.table:
       for cell in row:
-        print(f" {cell} ", end='')
+        print("{:6d}".format(cell), end='')
       print()
 
     print(f"{'#' * 25}")
@@ -25,4 +25,8 @@ class View:
   @staticmethod
   def show_game_results(results):
     print("Game end with status: {}")
+  
+  @staticmethod
+  def display_exit():
+    print("Bye Bye!!")
   

@@ -23,7 +23,8 @@ class GameControl:
   def start(self):
       while not self.model.is_done:
         self.view.show_game_board(board=self.model.board)
-        allowed_inputs = Arrows_map[Flow.Quit]
+        allowed_inputs = []
+        allowed_inputs.extend(Arrows_map[Flow.Quit])
         
         for move in self.model.valid_moves:
           allowed_inputs.extend(Arrows_map[move])
@@ -31,7 +32,7 @@ class GameControl:
         next_move_input = self.view.get_next_move_from_user(
                       valid_moves=allowed_inputs
         )
-
+        
         if next_move_input in Arrows_map[Flow.Quit]:
           break
 

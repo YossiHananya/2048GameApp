@@ -60,7 +60,7 @@ class Board:
     if not limit_check:
       return False
     
-    if neighbor in merged_tiles:
+    if neighbor in merged_tiles or (row, col) in merged_tiles:
       return False
     
     if self.is_tile_empty(row=neighbor[0], col=neighbor[1]):

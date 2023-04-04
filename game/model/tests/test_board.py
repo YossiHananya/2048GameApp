@@ -42,7 +42,7 @@ from game.model.board import Board
 )
 def test_movement(table, move, expected):
     board = Board(size=4)
-    board._table = table
+    board._board = table
     board.move(move=move)
-    assert board._table == expected
+    assert board._board == expected
     # assert True
